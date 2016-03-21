@@ -1,0 +1,47 @@
+body {
+
+    font-family: 'Open Sans';
+}
+
+.buttonBlock{    
+    margin: 25px;
+}
+
+.title{
+    text-align: center;
+    font-size: 42px;
+    color: black;
+}
+
+.buttonTitle {
+    font-size: 36px;
+    margin-right: 50px;
+    width: 250px;
+    display: inline-block;
+    vertical-align: middle;
+    color: black;
+}
+
+.mainContainer {
+    width: 700px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.display {
+    margin-left: 25px;
+    font-size: 30px;
+    width: 300px;
+    vertical-align: middle;
+    color: black;
+}
+
+.status {
+    margin-left: 25px;
+    font-size: 30px;
+    color: red;
+    vertical-align: middle;
+}
+
+
