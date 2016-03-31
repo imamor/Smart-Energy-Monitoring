@@ -2,11 +2,11 @@
 setInterval(function() {
 
   // Update sensor & core status
-  $.get('/get', {command: '/current', core: 'core'}, function(json_data) {
+  $.get('/get', {command: '/rea_power', core: 'core'}, function(json_data) {
 
     // sensor
     if (json_data.result){
-      $("#sensorDisplay").html("Current: " + json_data.result + "A");
+      $("#rea_power").html("Current: " + json_data.result + "A");
     }
 
     // Core status
@@ -26,11 +26,11 @@ setInterval(function() {
 setInterval(function() {
 
   // Update sensor & core status
-  $.get('/get', {command: '/voltage', core: 'core'}, function(json_data) {
+  $.get('/get', {command: '/rms_current', core: 'core'}, function(json_data) {
 
     // sensor
     if (json_data.result){
-      $("#voltageDisplay").html("Voltage: " + json_data.result + "A");
+      $("#rms_current").html("Current: " + json_data.result + "A");
     }
 
     // Core status

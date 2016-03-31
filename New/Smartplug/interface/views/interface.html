@@ -1,3 +1,11 @@
+
+
+<style>
+body{
+        background-color: blue;
+}
+</style>
+
 <head>
 <LINK href="/css/interface.css" rel="stylesheet" type="text/css" />
 <LINK href="/css/flat-ui.css" rel="stylesheet" type="text/css" />
@@ -7,25 +15,33 @@
 
 <body>
 <div class="mainContainer">
-  <div class="title">Smartplug</div>
-  <div class="buttonBlock"><div class="buttonTitle">Gerbil Core</div>
-  <button class="btn btn-block btn-lg btn-primary" 
-  type="button" id="1" onClick="buttonClick(this.id)">On</button>
-  <button class="btn btn-block btn-lg btn-danger" 
-  type="button" id="2" onClick="buttonClick(this.id)">Off</button>
+  <div class="title">Smart Energy Monitoring System</div>
+<center> <img src="https://upload.wikimedia.org/wikipedia/en/9/90/University_of_Ottawa_Logo.png"
+alt="UniversityofOttawaLogo" height="180" width="180" </img></center>
+  <div class="buttonBlock"><div class="buttonTitle">Device: Gerbil Core</div>
+  <button class="btn btn-block btn-lg btn-primary"
+  type="button" id="2" onClick="buttonClick(this.id)">On</button>
+  <button class="btn btn-block btn-lg btn-danger"
+  type="button" id="1" onClick="buttonClick(this.id)">Off</button>
   <div class="status" id="CoreStatus">Core Offline</div>
-  <div class="display" id="sensorDisplay">Current: </div>
-  <div class="display" id="voltageDisplay">sensor: </div>
-  <button class="btn btn-block btn-lg btn-primary" 
-  type="button" onClick="parent.location='http://localhost/smartplug/New/Smartplug/interface/views/Hour/graph.php'">Hour</button>
-  <button class="btn btn-block btn-lg btn-primary" 
-  type="button" onClick="parent.location='http://localhost/smartplug/New/Smartplug/interface/views/Day/graphd.php'">Day</button>
-  <button class="btn btn-block btn-lg btn-primary" 
-  type="button" onClick="parent.location='http://localhost/smartplug/New/Smartplug/interface/views/Week/graphw.php'">Week     </button>
+  <div class="display" id="rms_current">Current: </div>
+  <div class="display" id="rea_power">power: </div>
+
+  <button class="btn btn-block btn-lg btn-first"
+  type="button"
+onClick="parent.location='http://localhost/smartplug/New/Smartplug/interface/views/Hour/graph.php'">Hour</button>
+  <button class="btn btn-block btn-lg btn-second"
+  type="button"
+onClick="parent.location='http://localhost/smartplug/New/Smartplug/interface/views/Day/graphd.php'">Day</button>
+  <button class="btn btn-block btn-lg btn-third"
+  type="button"
+onClick="parent.location='http://localhost/smartplug/New/Smartplug/interface/views/Week/graphw.php'">Week
+    </button>
+
+
+
   </div>
 
 
 </div>
 </body>
-   
-

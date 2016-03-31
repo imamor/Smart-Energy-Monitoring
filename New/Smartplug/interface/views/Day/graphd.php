@@ -49,7 +49,7 @@ var yAxis = d3.svg.axis().scale(y)
 // Define the line
 var valueline = d3.svg.line()
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.Current); });
+    .y(function(d) { return y(d.RealPower); });
    
 // Adds the svg canvas
 var svg = d3.select("body")
@@ -64,15 +64,15 @@ var svg = d3.select("body")
 d3.json("datad.php", function(error, data) {
     data.forEach(function(d) {
         d.date = parseDate(d.date);
-        d.Current = +d.Current;
-	
+        d.RealPower = +d.RealPower;
+	d.ApparentPower = +d.ApparentPower;
    
     });
     //});
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.Current; })]);
+    y.domain([0, d3.max(data, function(d) { return d.RealPower; })]);
 
     // Add the valueline path.
     svg.append("path")
@@ -86,7 +86,7 @@ d3.json("datad.php", function(error, data) {
     .enter().append("circle")
 	.attr("r", 3.5)
 	.attr("cx",function(d) { return x(d.date); })
-	.attr("cy", function(d) { return y(d.Current); }); 
+	.attr("cy", function(d) { return y(d.RealPower); }); 
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
@@ -101,7 +101,7 @@ d3.json("datad.php", function(error, data) {
 });
 </script>
 <div> 
-<div class="display" id="powerDisplay">Power Used:</div>
+<div class="display" id="powerDisplay">Power Used:<?php echo $_SESSION['powerused'];?></div>
 <div class="display" id="costDisplay">Power Cost: <?php echo $_SESSION['powercostd'];?></div>
   <button class="btn btn-block btn-lg btn-primary" 
   type="button" onClick="parent.location='http://localhost/smartplug/New/Smartplug/interface/views/Hour/graph.php'">Hour</button>
@@ -111,9 +111,6 @@ d3.json("datad.php", function(error, data) {
 	  type="button" onClick="parent.location='http://localhost:3000'">Return</button>
 
 <script src="displayd.php" ></script>
-
-
-
 
 </div>
 </body>

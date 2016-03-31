@@ -1,35 +1,70 @@
 <?php
 // Get cURL resource
+
+
 $curl1 = curl_init();
-// Set some options - we are passing in a useragent too here
 curl_setopt_array($curl1, array(
     CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => 'https://api.spark.io/v1/devices/350027001347343339383037/current?access_token=53790635296d04ffa465944aca4986faacf5536c',
+    CURLOPT_URL => 'https://api.spark.io/v1/devices/350048000c47343432313031/real_power?access_token=53790635296d04ffa465944aca4986faacf5536c',
     CURLOPT_USERAGENT => '192.168.0.10'
 ));
 $resp1 = curl_exec($curl1);
-// Close request to clear up some resources
 curl_close($curl1);
+
+
 $curl2 = curl_init();
-// Set some options - we are passing in a useragent too here
 curl_setopt_array($curl2, array(
     CURLOPT_RETURNTRANSFER => 1,
-    CURLOPT_URL => 'https://api.spark.io/v1/devices/350027001347343339383037/voltage?access_token=53790635296d04ffa465944aca4986faacf5536c',
+    CURLOPT_URL => 'https://api.spark.io/v1/devices/350048000c47343432313031/app_power?access_token=53790635296d04ffa465944aca4986faacf5536c',
     CURLOPT_USERAGENT => '192.168.0.10'
 ));
-// Send the request & save response to $resp
 $resp2 = curl_exec($curl2);
-// Close request to clear up some resources
 curl_close($curl2);
+
+
+$curl3 = curl_init();
+curl_setopt_array($curl3, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'https://api.spark.io/v1/devices/350048000c47343432313031/rms_voltage?access_token=53790635296d04ffa465944aca4986faacf5536c',
+    CURLOPT_USERAGENT => '192.168.0.10'
+));
+$resp3 = curl_exec($curl3);
+curl_close($curl3);
+
+
+$curl4 = curl_init();
+curl_setopt_array($curl4, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'https://api.spark.io/v1/devices/350048000c47343432313031/rms_current?access_token=53790635296d04ffa465944aca4986faacf5536c',
+    CURLOPT_USERAGENT => '192.168.0.10'
+));
+$resp4 = curl_exec($curl4);
+curl_close($curl4);
+
+
+$curl5 = curl_init();
+curl_setopt_array($curl5, array(
+    CURLOPT_RETURNTRANSFER => 1,
+    CURLOPT_URL => 'https://api.spark.io/v1/devices/350048000c47343432313031/factor_power?access_token=53790635296d04ffa465944aca4986faacf5536c',
+    CURLOPT_USERAGENT => '192.168.0.10'
+));
+$resp5 = curl_exec($curl5);
+curl_close($curl5);
+
 
 $data1 = json_decode($resp1);
 $data2 = json_decode($resp2);
-$temp1 = $data1->result;
-$temp2 = $data2->result;
-//get power and cost
-//$temp3=$temp1*$temp2;
-//$temp4=$temp3*0.07*0.001;
-// MySQL stuff... sigh
+$data3 = json_decode($resp3);
+$data4 = json_decode($resp4);
+$data5 = json_decode($resp5);
+
+$RealPower = $data1->result;
+$ApparentPower = $data2->result;
+$RMSVoltage = $data3->result;
+$RMSCurrent = $data4->result;
+$PowerFactor = $data5->result;
+
+
 $dbhost = 'localhost:3036';
 $dbuser = 'smartpluguser';
 $dbpass = 'chris';
@@ -38,42 +73,38 @@ if(! $conn )
 {
   die('Could not connect: ' . mysql_error());
 }
-$temp3=$temp1*$temp2;
-//$hour=strtotime($hour);
+
+
+
 $hour=date('H');
 echo 'Hour is:';
 echo $hour;
+echo PHP_EOL;
 if ((($hour >= 0) && ($hour < 10)) || (($hour>17) && ($hour<21)))
 {
 	$cost=0.10;
 }
 else {$cost=0.07;}
-$temp4=$temp3*$cost;
+$mincost=$RealPower*$cost;
+echo $RealPower;
 echo PHP_EOL;
-echo 'Current is: ';
-echo $temp1;
+echo $ApparentPower;
 echo PHP_EOL;
-echo 'Voltage is: ';
-echo $temp2;
+echo $RMSCurrent;
 echo PHP_EOL;
-echo 'Power is: ';
-echo $temp3;
+echo $RMSVoltage;
 echo PHP_EOL;
-echo 'Cost is: ';
-echo $cost;
-echo PHP_EOL;
+echo $PowerFactor;
 $sql = 'INSERT INTO smartplug '.
-     '(Current, Voltage, Power, Cost, mincost) '.
-     'VALUES ( '.$temp1.', '.$temp2.', '.$temp3.', '.$cost.','.$temp4.'
-)';
+     '(RMSCurrent, RMSVoltage, RealPower, ApparentPower, PowerFactor, Cost, mincost) '.
+     'VALUES ( '.$RMSCurrent.', '.$RMSVoltage.', '.$RealPower.', '.$ApparentPower.','.$PowerFactor.',
+'.$cost.','.$mincost.')';
 mysql_select_db('smartplug');
 $retval = mysql_query( $sql, $conn );
 if(! $retval )
 {
   die('Could not enter data: ' . mysql_error());
 }
-//echo "Entered data successfully\n";
 mysql_close($conn);
  
-// check out the nifty graph...
 

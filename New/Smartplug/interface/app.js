@@ -10,7 +10,7 @@ var port = 3000;
 
 // Cores data
 cores = {
-    core: '350027001347343339383037',
+    core: '350048000c47343432313031',
 };
 
 // Token
@@ -42,7 +42,7 @@ app.get("/get", function(req, res){
       res.json(body);  
     }
     else {
-      console.log("Core offline");
+      console.log("Core offl ine");
       res.json({coreInfo: {connected: false}}); 
     }
   });
@@ -65,7 +65,7 @@ app.get("/post", function(req, res){
       res.json(body);  
     }
     else {
-      console.log("Core offline");
+      console.log("Core of fline");
       res.json({coreInfo: {connected: false}});
     }
   });

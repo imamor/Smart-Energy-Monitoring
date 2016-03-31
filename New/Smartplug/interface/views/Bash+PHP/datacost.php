@@ -3,10 +3,9 @@
     $password = "chris";   
     $host = "localhost";
     $database="smartplug";
-    
     $server = mysql_connect($host, $username, $password);
     $connection = mysql_select_db($database, $server);
-    $myquery = "SELECT  AVG(mincost)AS 'sum' FROM  `smartplug` ORDER BY date DESC LIMIT 60";
+    $myquery = "SELECT  AVG(mincost)AS 'sum',AVG(Cost)AS 'sum2' FROM  `smartplug` ORDER BY date DESC LIMIT 60";
     $query = mysql_query($myquery);
     
     if ( ! $query ) {
@@ -16,18 +15,11 @@
  
   while ($row = mysql_fetch_assoc($query)) {
       $data = $row["sum"];
+      $data1= $row["sum2"];
   }
-    
-    
-
-    //echo json_encode($data); 
-    //echo $data;
- 
-
-	$sql = 'INSERT INTO currents '.
-     		'(hourlycost) '.
-     		'VALUES ( '.$data.')';
-     
+      	$sql = 'INSERT INTO PowerCost '.
+     		'(HourlyCost , HourlyRealKWH) '.
+     		'VALUES ( '.$data.','.$data1.')';
 $retval = mysql_query( $sql, $server );
 if(! $retval )
 {
